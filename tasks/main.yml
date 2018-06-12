@@ -1,2 +1,6 @@
+# Copyright © 2018 VMware, Inc. All Rights Reserved.
+# SPDX-License-Identifier: Apache-2.0
 ---
-# tasks file for ansible-role-azure-edge
+# This role sets up an Azure IoT Edge.
+
+- import_tasks: azure-edge.yml

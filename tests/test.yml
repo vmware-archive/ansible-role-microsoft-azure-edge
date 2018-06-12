@@ -1,5 +1,11 @@
 ---
 - hosts: localhost
   remote_user: root
+
+  pre_tasks:
+    - name: install pip
+      include_role:
+        name: pip
+
   roles:
-    - ansible-role-azure-edge
+    - azure-edge

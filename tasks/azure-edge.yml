@@ -1,0 +1,14 @@
+# Copyright © 2018 VMware, Inc. All Rights Reserved.
+# SPDX-License-Identifier: Apache-2.0
+---
+# These tasks deploy an IoT Edge module.
+
+- name: show edge to install
+  debug:
+    msg: "Deploying IoT Edge ''."
+
+- name: install-pip
+  package:
+    name: python-pip
+    state: present
+  when: not ansible_check_mode

@@ -1,0 +1,4 @@
+- name: brentwg.azure-cli
+  src: https://github.com/huxoll/ansible-role-azure-cli
+- name: pip
+  src: vmware.ansible-role-pip
