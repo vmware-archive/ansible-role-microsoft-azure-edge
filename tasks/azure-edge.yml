@@ -12,3 +12,28 @@
     name: python-pip
     state: present
   when: not ansible_check_mode
+
+- name: Raspian dependencies
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: [ python2.7-dev libffi-dev libssl-dev ]
+  when:
+    - not ansible_check_mode
+    - ansible_distribution == 'Raspian' # TODO: verify
+
+- name: Raspian dependencies
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: [ python2.7-dev libffi-dev libssl-dev ]
+  when:
+    - not ansible_check_mode
+    - ansible_distribution == 'Raspbian' # TODO: verify
+
+- name: Upgrade pip on Raspbian
+  pip:
+    name: pip
+    state: latest
+  when:
+    - ansible_distribution == 'Raspbian' # TODO: verify
