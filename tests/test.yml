@@ -5,9 +5,6 @@
   pre_tasks:
     - name: Check path
       command: echo $PATH
-    - name: install pip
-      include_role:
-        name: pip
 
   roles:
     - azure-edge
