@@ -3,6 +3,11 @@ Azure Edge
 
 This role deploys an Azure IoT Edge to a destination VM or machine.
 
+Build Status
+------------
+
+[![pipeline status](https://gitlab.eng.vmware.com/vmworld2018/ansible-role-azure-edge/badges/master/pipeline.svg)](https://gitlab.eng.vmware.com/vmworld2018/ansible-role-azure-edge/commits/master)
+
 Requirements
 ------------
 
