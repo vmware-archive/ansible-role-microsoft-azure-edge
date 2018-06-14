@@ -15,4 +15,17 @@ validate:
 
 test_azure_edge:
   script:
-    - ansible-playbook tests/test.yml -i tests/inventory -vv
+    - ansible-playbook tests/test.yml -i tests/inventory
+
+package_role:
+  script:
+    - mkdir packages
+    - >
+      tar -czf packages/azure-edge.tar.gz
+      vars tasks meta files handlers defaults *.md
+
+artifacts:
+  untracked: true
+  paths:
+    - packages/
+  only: tags

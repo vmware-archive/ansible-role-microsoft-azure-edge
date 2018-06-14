@@ -1,7 +1,7 @@
 Azure Edge
 ==========
 
-This role deploys an Azure IoT Edge.
+This role deploys an Azure IoT Edge to a destination VM or machine.
 
 Requirements
 ------------
@@ -18,7 +18,7 @@ TBD.
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+This role does not explicitly depend on any other roles.
 
 Example Playbook
 ----------------
@@ -27,7 +27,7 @@ Here's an example playbook:
 
     - hosts: servers
       roles:
-         - { role: name.tbd }
+         - { role: vmware.azure-edge }
 
 License
 -------
