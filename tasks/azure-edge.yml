@@ -7,33 +7,17 @@
   debug:
     msg: "Deploying IoT Edge '{{ azure_edge_name }}'."
 
-- name: import the APT repo key
-  apt_key:
-    url: https://packages.microsoft.com/keys/microsoft.asc
-    state: present
-
-- name: add Microsoft repository
-  apt_repository:
-    repo: deb https://packages.microsoft.com/ubuntu/16.04/prod xenial main
-    state: present
-    filename: microsoft-prod
-    update_cache: true
-  when:
-    - ansible_distribution == 'Ubuntu'
-    - ansible_distribution_version == '16.04'
-
-- name: install the container runtime, cli, and iotedge
-  apt:
-    name: "{{ item }}"
-  with_items:
-    - moby-engine
-    - moby-cli
-
-- name: install iotedge
-  apt:
-    name: "{{ item }}"
-  with_items:
-    - iotedge
+- name: Include OS-specific tasks
+  include_tasks: "{{ os_tasks }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
+        - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+        - "{{ ansible_distribution }}.yml"
+        - "{{ ansible_os_family }}.yml"
+      skip: true
+  loop_control:
+    loop_var: os_tasks
 
 - name: set the connection string from previously discovered values
   set_fact:

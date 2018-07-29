@@ -1,0 +1,32 @@
+# Copyright © 2018 VMware, Inc. All Rights Reserved.
+# SPDX-License-Identifier: Apache-2.0
+---
+# These tasks deploy an IoT Edge on a Debian family OS.
+
+- name: import the APT repo key
+  apt_key:
+    url: https://packages.microsoft.com/keys/microsoft.asc
+    state: present
+
+- name: add Microsoft repository
+  apt_repository:
+    repo: deb https://packages.microsoft.com/ubuntu/16.04/prod xenial main
+    state: present
+    filename: microsoft-prod
+    update_cache: true
+  when:
+    - ansible_distribution == 'Ubuntu'
+    - ansible_distribution_version == '16.04'
+
+- name: install the container runtime, cli, and iotedge
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - moby-engine
+    - moby-cli
+
+- name: install iotedge
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - iotedge

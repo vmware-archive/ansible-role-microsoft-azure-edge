@@ -1,10 +1,5 @@
 ---
 - hosts: localhost
-  remote_user: root
-
-  pre_tasks:
-    - name: Check path
-      command: echo $PATH
 
   roles:
     - azure-edge
