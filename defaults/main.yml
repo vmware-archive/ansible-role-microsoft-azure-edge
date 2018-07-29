@@ -1,2 +1,6 @@
 ---
 # defaults file for ansible-role-azure-edge
+
+# This should be supplied as a host variable, probably.  This is the name
+# that this edge was configured with on the Azure portal.
+azure_edge_name: no-name

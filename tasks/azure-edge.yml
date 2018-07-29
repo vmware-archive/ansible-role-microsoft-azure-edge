@@ -5,37 +5,54 @@
 
 - name: show edge to install
   debug:
-    msg: "Deploying IoT Edge ''."
+    msg: "Deploying IoT Edge '{{ azure_edge_name }}'."
 
-- name: install-pip
-  package:
-    name: python-pip
+- name: import the APT repo key
+  apt_key:
+    url: https://packages.microsoft.com/keys/microsoft.asc
     state: present
-  when: not ansible_check_mode
 
-- name: Raspian dependencies
-  package:
+- name: add Microsoft repository
+  apt_repository:
+    repo: deb https://packages.microsoft.com/ubuntu/16.04/prod xenial main
+    state: present
+    filename: microsoft-prod
+    update_cache: true
+  when:
+    - ansible_distribution == 'Ubuntu'
+    - ansible_distribution_version == '16.04'
+
+- name: install the container runtime, cli, and iotedge
+  apt:
     name: "{{ item }}"
-    state: present
-  with_items: [ python2.7-dev libffi-dev libssl-dev ]
-  when:
-    - not ansible_check_mode
-    - ansible_distribution == 'Raspian'  # TODO: verify
+  with_items:
+    - moby-engine
+    - moby-cli
 
-- name: Raspian dependencies
-  package:
+- name: install iotedge
+  apt:
     name: "{{ item }}"
-    state: present
-  with_items: [ python2.7-dev libffi-dev libssl-dev ]
-  when:
-    - not ansible_check_mode
-    - ansible_distribution == 'Raspbian'  # TODO: verify
+  with_items:
+    - iotedge
 
-- name: Upgrade pip on Raspbian
-  pip:
-    name: pip
-    state: latest
+- name: set the connection string from previously discovered values
+  set_fact:
+    connection_string_primary: "HostName=\
+      {{ azure_iot_hub_name }}.azure-devices.net;\
+      DeviceId={{ azure_edge_name }};\
+      SharedAccessKey={{ azure_groups[azure_edge_name].primaryKey }}"
   when:
-    - ansible_distribution == 'Raspbian'  # TODO: verify
-  tags:
-    - skip_ansible_lint
+    - azure_groups is defined
+
+- name: Inject configuration parameters.
+  replace:
+    dest: /etc/iotedge/config.yaml
+    regexp: '<ADD DEVICE CONNECTION STRING HERE>'
+    replace: "{{ connection_string_primary }}"
+  when:
+    - connection_string_primary is defined
+
+- name: Restart service iotedge
+  service:
+    name: iotedge
+    state: restarted
