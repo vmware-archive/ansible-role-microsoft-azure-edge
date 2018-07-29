@@ -24,9 +24,11 @@
   with_items:
     - moby-engine
     - moby-cli
+  when: not ansible_check_mode
 
 - name: install iotedge
   apt:
     name: "{{ item }}"
   with_items:
     - iotedge
+  when: not ansible_check_mode
