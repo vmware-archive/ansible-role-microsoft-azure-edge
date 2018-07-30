@@ -19,6 +19,16 @@
   loop_control:
     loop_var: os_tasks
 
+- name: show edge details
+  block:
+    - debug:
+        msg: "Configuring connection for IoT Edge '{{ azure_edge_name }}'."
+    - debug:
+        msg: "Connecting to hub '{{ azure_iot_hub_name }}'."
+    - debug:
+        msg: "Known edge facts: '{{ azure_groups }}'."
+  when: azure_groups is defined
+
 - name: set the connection string from previously discovered values
   set_fact:
     connection_string_primary: "HostName=\
