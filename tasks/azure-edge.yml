@@ -7,6 +7,15 @@
   debug:
     msg: "Deploying IoT Edge '{{ azure_edge_name }}'."
 
+- name: incorporate collected facts from roles run at driver
+  set_fact:
+    azure_groups: "{{ hostvars['localhost']['azure_groups'] }}"
+  when:
+    - azure_groups is not defined
+    - hostvars is defined
+    - hostvars['localhost'] is defined
+    - hostvars['localhost']['azure_groups'] is defined
+
 - name: Include OS-specific tasks
   include_tasks: "{{ os_tasks }}"
   with_first_found:

@@ -13,6 +13,18 @@ provisioner:
   name: ansible
   lint:
     name: ansible-lint
+  options:
+    extra-vars:
+      azure_cli_application_id: ${azure_cli_application_id}
+      azure_cli_application_key: ${azure_cli_application_key}
+      azure_cli_tenant_id: ${azure_cli_tenant_id}
+      azure_iot_hub_name: ${azure_iot_hub_name}
+      azure_iot_group: ${azure_iot_group}
+      azure_edge_name: edge1
+      azure_groups:
+        edge1:
+          primaryKey: this-is-primary-key
+          secondaryKey: this-is-secondary-key
 scenario:
   name: default
 verifier:

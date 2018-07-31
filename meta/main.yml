@@ -20,5 +20,4 @@ galaxy_info:
     - edge
     - vmware
 
-dependencies:
-  - huxoll.azure-cli
+dependencies: []
