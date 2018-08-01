@@ -43,7 +43,7 @@
     azure_edge_device_name: >-
       {{ azure_edge_name }}-edge
   when:
-    - azure_edge_group is defined
+    - azure_edge_name is defined
 
 - name: set the connection string from previously discovered values
   set_fact:
@@ -56,11 +56,12 @@
 
 - name: Inject configuration parameters.
   replace:
-    dest: /etc/iotedge/config.yaml
-    regexp: '<ADD DEVICE CONNECTION STRING HERE>'
-    replace: "{{ connection_string_primary }}"
+    path: /etc/iotedge/config.yaml
+    regexp: '^(\s+device_connection_string: ").*(")'
+    replace: '\1{{ connection_string_primary }}\2'
   when:
     - connection_string_primary is defined
+    - ansible_distribution == 'Ubuntu'
 
 - name: Restart service iotedge
   service:
