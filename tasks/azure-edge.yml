@@ -38,11 +38,18 @@
         msg: "Known edge facts: '{{ azure_groups }}'."
   when: azure_groups is defined
 
+- name: set edge device name
+  set_fact:
+    azure_edge_device_name: >-
+      {{ azure_edge_name }}-edge
+  when:
+    - azure_edge_group is defined
+
 - name: set the connection string from previously discovered values
   set_fact:
     connection_string_primary: "HostName=\
       {{ azure_iot_hub_name }}.azure-devices.net;\
-      DeviceId={{ azure_edge_name }};\
+      DeviceId={{ azure_edge_device_name }};\
       SharedAccessKey={{ azure_groups[azure_edge_name].primaryKey }}"
   when:
     - azure_groups is defined
