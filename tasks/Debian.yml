@@ -3,6 +3,17 @@
 ---
 # These tasks deploy an IoT Edge on a Debian family OS.
 
+- name: Fix broken apt module for Ubuntu 1604
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+  - python-simplejson
+  - aptitude
+  - apt-transport-https
+  when:
+    - not ansible_check_mode
+
 - name: import the APT repo key
   apt_key:
     url: https://packages.microsoft.com/keys/microsoft.asc
