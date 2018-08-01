@@ -8,9 +8,9 @@
     name: "{{ item }}"
     state: present
   with_items:
-  - python-simplejson
-  - aptitude
-  - apt-transport-https
+    - python-simplejson
+    - aptitude
+    - apt-transport-https
   when:
     - not ansible_check_mode
 
