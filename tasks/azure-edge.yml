@@ -59,6 +59,7 @@
     path: /etc/iotedge/config.yaml
     regexp: '^(\s+device_connection_string: ").*(")'
     replace: '\1{{ connection_string_primary }}\2'
+  register: update_config
   when:
     - connection_string_primary is defined
     - ansible_distribution == 'Ubuntu'
@@ -69,8 +70,11 @@
     state: restarted
   when:
     - ansible_distribution == 'Ubuntu'
+    - update_config.changed
   register: restart_iotedge1
   ignore_errors: true
+  tags:
+    - skip_ansible_lint
 
 - name: Get logs if restart fails
   command: journalctl -xe -u iotedge --since "5 minutes ago" --no-pager
