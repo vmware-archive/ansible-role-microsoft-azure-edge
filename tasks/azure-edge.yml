@@ -69,3 +69,22 @@
     state: restarted
   when:
     - ansible_distribution == 'Ubuntu'
+  register: restart_iotedge1
+  ignore_errors: true
+
+- name: Get logs if restart fails
+  command: journalctl -xe -u iotedge --since "5 minutes ago" --no-pager
+  when:
+    - restart_iotedge1.failed is defined and restart_iotedge1.failed
+
+- name: Restart service iotedge
+  service:
+    name: iotedge
+    state: restarted
+  register: restart_iotedge2_5
+  retries: 4
+  delay: 5
+  until: not restart_iotedge2_5.failed
+  when:
+    - ansible_distribution == 'Ubuntu'
+    - restart_iotedge1.failed is defined and restart_iotedge1.failed
