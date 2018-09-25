@@ -36,6 +36,7 @@
         msg: "Connecting to hub '{{ azure_iot_hub_name }}'."
     - debug:
         msg: "Known edge facts: '{{ azure_groups }}'."
+      no_log: true
   when: azure_groups is defined
 
 - name: set edge device name
@@ -51,8 +52,10 @@
       {{ azure_iot_hub_name }}.azure-devices.net;\
       DeviceId={{ azure_edge_device_name }};\
       SharedAccessKey={{ azure_groups[azure_edge_name].primaryKey }}"
+  no_log: true
   when:
     - azure_groups is defined
+
 
 - name: Inject configuration parameters.
   replace:
