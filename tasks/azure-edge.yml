@@ -55,7 +55,7 @@
   no_log: true
   when:
     - azure_groups is defined
-
+    - azure_edge_name in azure_groups
 
 - name: Inject configuration parameters.
   replace:
