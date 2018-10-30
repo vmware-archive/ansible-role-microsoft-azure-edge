@@ -5,7 +5,7 @@ galaxy_info:
   author: John Gardner
   description: Install an Azure IoT Edge
   company: VMware
-  license: license (Apache-2.0)
+  license: MIT
   min_ansible_version: 2.4
 
   platforms:
