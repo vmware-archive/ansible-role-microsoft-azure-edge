@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 ---
 galaxy_info:
+  role_name: azure-edge
   author: John Gardner
   description: Install an Azure IoT Edge
   company: VMware
