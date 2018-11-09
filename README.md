@@ -6,14 +6,14 @@ This role deploys an Azure IoT Edge to a destination VM or machine.
 Build Status
 ------------
 
-[![pipeline status](https://gitlab.eng.vmware.com/vmworld2018/ansible-role-azure-edge/badges/master/pipeline.svg)](https://gitlab.eng.vmware.com/vmworld2018/ansible-role-azure-edge/commits/master)
+[![pipeline status](https://travis-ci.org/vmware/ansible-role-microsoft-azure-edge.svg?branch=master)](https://travis-ci.org/vmware/ansible-role-microsoft-azure-edge)
 
 Requirements
 ------------
 
-You will need to supply Azure credentials to run this role.  Create an
-application principal as described here:
-https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal
+This role deploys the code for an Azure Edge to the target instance, but the
+server side definition must have already been created and configured in the
+Azure Portal (or automated with [Azure Iot](https://github.com/vmware/ansible-role-microsoft-azure-edge) ).
 
 Role Variables
 --------------
@@ -43,4 +43,3 @@ License
 -------
 
 MIT
-
