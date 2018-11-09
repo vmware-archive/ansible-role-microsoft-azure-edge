@@ -1,0 +1,15 @@
+# Settings for this role
+---
+# Name of the IoT hub
+azure_iot_hub_name: AZURE_IOT_HUB_NAME
+
+# This would typically be set as a host variable, on the particular host
+# that is to be configured as the edge.
+# We set it here in a global var purely as a sample.
+azure_edge_name: AZURE_IOT_EDGE
+
+# Map of known data. Normally this would be discovered by the
+# azure-iot role, but can be specified a vars as well.
+azure_groups:
+  AZURE_IOT_EDGE:
+    primaryKey: PRIMARY_KEY
