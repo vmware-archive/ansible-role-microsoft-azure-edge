@@ -18,7 +18,26 @@ Azure Portal (or automated with [Azure Iot](https://github.com/vmware/ansible-ro
 Role Variables
 --------------
 
-TBD.
+The primary variable required is ```azure_edge_name```, which will be injected
+into configuration files as the identity of this edge.  If this role is run in
+same playbook as the Azure IoT role, other variables will be inherited from
+host vars discovered by that role.  If this role is run at a different time,
+the following variables are required.
+
+``` yaml
+# Name of the IoT hub
+azure_iot_hub_name: azure-iot-hub-name
+
+# This would typically be set as a host variable, on the particular host
+# that is to be configured as the edge.
+azure_edge_name: azure-edge-name
+
+# Map of known data. Normally this would be discovered by the
+# azure-iot role, but can be specified as vars as well.
+azure_groups:
+  azure-edge-name:  # this should be the real edge name configured in portal
+    primaryKey: primary-key # the primary key available in the portal
+```
 
 Dependencies
 ------------
